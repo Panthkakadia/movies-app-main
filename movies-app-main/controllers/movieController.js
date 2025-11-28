@@ -26,9 +26,10 @@ exports.create = async (req, res) => {
   res.redirect('/movies');
 };
 exports.show = async (req, res) => {
-  const movie = await Movie.findById(req.params.id);
-  if (!movie) return res.redirect('/movies');
-  res.render('movies/show', { movie });
+  const movie = await Movie.findById(req.params.id).populate('user');
+    if (!movie) return res.redirect('/movies');
+    const isOwner = req.session.userId && movie.user._id.toString() === req.session.userId;
+    res.render('movies/show', { movie, isOwner });
 };
 exports.editForm = async (req, res) => {
   const movie = await Movie.findById(req.params.id);
