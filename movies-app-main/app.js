@@ -25,6 +25,15 @@ app.use((req, res, next) => {
 app.use('/', require('./routes/index'));
 app.use('/movies', require('./routes/movies'));
 app.use('/', require('./routes/users'));
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).render('error', { 
+        message: 'Something went wrong!',
+        error: process.env.NODE_ENV === 'development' ? err : {}
+    });
+});
+
 app.use((req, res) => res.status(404).render('404'));
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
