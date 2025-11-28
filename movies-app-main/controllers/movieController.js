@@ -1,7 +1,8 @@
 const Movie = require('../models/Movie');
 const { validationResult } = require('express-validator');
 exports.index = async (req, res) => {
-  const movies = await Movie.find();
+  const query = req.session.userId ? { user: req.session.userId } : {};
+  const movies = await Movie.find(query).sort('-createdAt');
   res.render('movies/list', { movies });
 };
 exports.newForm = (req, res) => {
