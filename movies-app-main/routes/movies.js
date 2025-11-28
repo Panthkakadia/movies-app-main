@@ -11,6 +11,8 @@ router.get('/:id', movieController.show);
 router.get('/:id/edit', isLoggedIn, isOwner, movieController.editForm);
 router.put('/:id', isLoggedIn, isOwner, movieValidator, movieController.update);
 router.delete('/:id', isLoggedIn, isOwner, movieController.delete);
+
+// Movie Recipe
 router.get('/:id/recipe', async (req, res) => {
     const movie = await Movie.findById(req.params.id);
     if (!movie) return res.status(404).json({ error: 'Movie not found' });
