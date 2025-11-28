@@ -1,0 +1,32 @@
+require('dotenv').config();
+const express = require('express');
+const path = require('path');
+const morgan = require('morgan');
+const methodOverride = require('method-override');
+const app = express();
+app.use(express.urlencoded({ extended: false }));
+const dbConnect = require('./config/db');
+dbConnect();
+const sessionConfig = require('./config/session');
+app.use(sessionConfig);
+app.use(morgan('dev'));
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method'));
+app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.use((req, res, next) => {
+  res.locals.user = req.session.userId;
+  res.locals.success = req.session.success;
+  res.locals.error = req.session.error;
+  delete req.session.success;
+  delete req.session.error;
+  next();
+});
+app.use('/', require('./routes/index'));
+app.use('/movies', require('./routes/movies'));
+app.use('/', require('./routes/users'));
+app.use((req, res) => res.status(404).render('404'));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});

@@ -1,0 +1,13 @@
+nav.navbar.navbar-expand-lg.navbar-dark.bg-primary.shadow
+  .container-fluid
+    a.navbar-brand.fs-4(href="/movies") 🎬 Movies App
+    ul.navbar-nav.ms-auto
+      if !user
+        li.nav-item
+          a.nav-link(href="/login") Login
+        li.nav-item
+          a.nav-link(href="/register") Register
+      else
+        li.nav-item
+          form.d-inline(action="/logout" method="POST")
+            button.btn.btn-link.nav-link(type="submit") Logout

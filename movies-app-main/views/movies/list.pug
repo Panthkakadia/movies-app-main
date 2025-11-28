@@ -1,0 +1,23 @@
+extends ../layouts/layout.pug
+block content
+  h1.mb-4 Movies
+  a.btn.btn-primary.mb-4(href="/movies/new") Add Movie
+  if movies.length
+    .row
+      each movie in movies
+        .col-md-4.mb-4
+          .card.shadow-sm
+            if movie.poster
+              img.card-img-top(src=movie.poster, alt=movie.name, style="height:240px;object-fit:cover;max-width:100%;background:#222;")
+            .card-body
+              h5.card-title= movie.name
+              p.card-text.text-muted= movie.year
+              p.card-text
+                | Genre(s):
+                span.badge.bg-secondary.ms-2= movie.genres.join(', ')
+              p.card-text
+                | Rating:
+                span.badge.bg-success.ms-2= movie.rating
+              a.btn.btn-outline-primary.mt-2(href=`/movies/${movie._id}`) View Details
+  else
+    .alert.alert-info.mt-4 No movies added yet.

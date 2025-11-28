@@ -1,0 +1,23 @@
+extends ../layouts/layout.pug
+block content
+  .card.shadow-lg
+    if movie.poster
+      .d-flex.justify-content-center.bg-dark.py-3
+        img.card-img-top(
+          src=movie.poster,
+          alt=movie.name,
+          style="max-width:350px; max-height:500px; width:100%; height:auto; border-radius:12px; object-fit:cover; box-shadow: 0 4px 24px rgba(0,0,0,0.2); background:#222;"
+        )
+    .card-body
+      h2.card-title= movie.name
+      p.card-text Description: #{movie.description}
+      p.card-text Year: #[span.badge.bg-info.text-dark= movie.year]
+      p.card-text Genres:
+        each genre in movie.genres
+          span.badge.bg-warning.text-dark.mx-1= genre
+      p.card-text.mt-2 Rating:
+        span.badge.bg-success.fs-5= movie.rating
+      if user && user == movie.user._id.toString()
+        a.btn.btn-warning.mt-3.me-2(href=`/movies/${movie._id}/edit`) Edit
+        form.delete-movie-form(method="POST", action=`/movies/${movie._id}?_method=DELETE`, style="display:inline;")
+          button.btn.btn-danger(type="submit") Delete
