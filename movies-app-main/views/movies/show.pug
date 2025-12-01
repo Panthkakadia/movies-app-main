@@ -18,7 +18,7 @@ block content
       p.card-text.mt-2 Rating:
         span.badge.bg-success.fs-5= movie.rating
       button.btn.btn-info.mt-3.ms-2#recipeBtn(data-movie-id=movie._id) 🍿 Movie Night Recipe
-      if isOwner           // <— updated line
+      if isOwner           
         a.btn.btn-warning.mt-3.me-2(href=`/movies/${movie._id}/edit`) Edit
         form.delete-movie-form(method="POST", action=`/movies/${movie._id}?_method=DELETE`, style="display:inline;")
           button.btn.btn-danger(type="submit") Delete
