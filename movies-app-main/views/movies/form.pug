@@ -14,7 +14,7 @@ block content
           textarea.form-control(name="description", required)= movie.description
         .mb-3
           label.form-label(for="year") Year
-          input.form-control(type="number", name="year", required, min="1900", max=new Date().getFullYear(), value=movie.year)
+          input.form-control(type="number", name="year", required, min="1900", max="2025", value=movie.year)
         .mb-3
           label.form-label(for="genres") Genres (comma separated)
           input.form-control(type="text", name="genres", required, value=movie.genres ? movie.genres.join(', ') : '')

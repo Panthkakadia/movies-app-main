@@ -3,6 +3,7 @@ const router = express.Router();
 const movieController = require('../controllers/movieController');
 const { isLoggedIn, isOwner } = require('../middleware/auth');
 const { movieValidator } = require('../middleware/validators');
+const Movie = require('../models/Movie');
 
 router.get('/', movieController.index);
 router.get('/new', isLoggedIn, movieController.newForm);
